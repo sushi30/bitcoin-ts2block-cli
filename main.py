@@ -20,8 +20,11 @@ def sign(number):
     return 1 if number >= 0 else -1
 
 
-def calculate_delta(reference_ts, current_ts, mining_rate=600):
-    delta = (current_ts - reference_ts) / mining_rate
+def calculate_delta(target_ts, current_ts, mining_rate=600):
+    """Calculate how many blocks to move given a current timestamp, a target timestamp and
+    mining rate (i.e velocity) for the current blockchain. The algorithm will force a movement by setting
+    to min/max 1 depending on the sign of thus avoiding a lock."""
+    delta = (current_ts - target_ts) / mining_rate
     return max(math.floor(abs(delta)), 1) * sign(delta)
 
 
