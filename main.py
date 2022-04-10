@@ -44,7 +44,7 @@ def ts2block(ts, debug=False):
         return latest_block["height"]
     while not parent_block["time"] <= ts < child_block["time"]:
         delta = calculate_delta(ts, parent_block["time"], avg_mining_rate)
-        next_block_to_check = parent_block["height"] - delta
+        next_block_to_check = max(parent_block["height"] - delta, 0)
         parent_block = get_block(next_block_to_check)
         child_block = get_block(next_block_to_check + 1)
         calls += 2
